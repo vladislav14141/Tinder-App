@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SDWebImage
 enum SwipeDirection {
     case right
     case left
@@ -17,7 +17,11 @@ class CardView: UIView {
 
     var cardViewModel: CardViewModel! {
         didSet {
-            imageView.image = UIImage(named: cardViewModel.imageNames.first ?? "")
+            let imageUrlString = cardViewModel.imageNames.first ?? ""
+            if let url = URL(string: imageUrlString){
+                imageView.sd_setImage(with: url)
+            }
+            
             infoLabel.attributedText = cardViewModel.attributedString
             infoLabel.textAlignment = cardViewModel.textAlignment
             
@@ -102,8 +106,10 @@ class CardView: UIView {
     }
     //RXSwift
     fileprivate func setupImageIndexObserver() {
-        cardViewModel.imageIndexObserver = { [unowned self] (image, i) in
-            self.imageView.image = image
+        cardViewModel.imageIndexObserver = { [unowned self] (imageUrl, i) in
+            if let imageUrl = imageUrl, let url = URL(string: imageUrl) {
+                self.imageView.sd_setImage(with: url)
+            }
             self.barsStackView.arrangedSubviews.forEach { (view) in
                 view.backgroundColor = self.deselectedBarColor
             }

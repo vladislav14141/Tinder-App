@@ -7,54 +7,62 @@
 //
 
 import UIKit
-
+import Firebase
 class HomeController: UIViewController {
 
     let topStackView = TopNavigationStackView()
     let cardsDeckView = UIView()
-    let bottomStackView = HomeBottomControlStackView()
+    let bottomControls = HomeBottomControlStackView()
     
-    let cardViewModels: [CardViewModel] = {
-        let producers = [
-            Advertiser(title: "Best game 2019", brandName: "Dota2", posterPhotoName: "dota2"),
-            User(name: "Ирина", age: 43, profession: "Бухгалтер", imageNames: ["mother1", "mother2", "mother3"]),
-            User(name: "Алексей", age: 42, profession: "Бизнесмен", imageNames: ["father1", "father2"]),
-            Advertiser(title: "Best game 2019", brandName: "Dota2", posterPhotoName: "dota2"),
-            User(name: "Юлия", age: 20, profession: "Студент", imageNames: ["julia1", "julia2", "julia3", "julia4", "julia5"]),
-            User(name: "Владислав", age: 21, profession: "Студент", imageNames: ["vlad1", "vlad2", "vlad3"])
-            ] as [ProducesCardViewModel]
-        let viewModels = producers.map({return $0.toCardViewModel()})
-        return viewModels
-    }()
+    let progressHUD = ProgressHUD()
+    var lastFetchedUser: User?
+    var cardViewModels = [CardViewModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         topStackView.settingButton.addTarget(self, action: #selector(handleSetting), for: .touchUpInside)
-        
-        setupDummyCards()
+        bottomControls.refreshButton.addTarget(self, action: #selector(handleRefresh), for: .touchUpInside)
+
         setupLayout()
+        fetchUsersFromFirestore()
     }
 
-    @objc func handleSetting() {
-        print("Show registration page")
-        let registrationController = RegistrationViewController()
-        present(registrationController, animated: true)
-    }
-    
-    // MARK: - Private Methods
-    fileprivate func setupDummyCards(){
-        
-        cardViewModels.forEach { (card) in
-            let cardView = CardView(frame: .zero)
+    private func fetchUsersFromFirestore(){
+        let query = Firestore.firestore().collection("users").order(by: "uid").start(after: [lastFetchedUser?.uid ?? ""]).limit(to: 2)
+        progressHUD.showProgressHUD(in: self.view, with: "Fetching Users")
+        query.getDocuments { (snapshot, err) in
+            self.progressHUD.dismiss()
+            if let err = err {
+                self.progressHUD.showHUDWithMessage(in: self.view, error: err)
+                return
+            }
             
-            cardView.cardViewModel = card            
-            cardsDeckView.addSubview(cardView)
-            cardView.fillSuperview()
+            snapshot?.documents.forEach({ (documentSnapshot) in
+                let userDictionary = documentSnapshot.data()
+                let user = User(dictionary: userDictionary)
+                self.cardViewModels.append(user.toCardViewModel())
+                self.lastFetchedUser = user
+                print(userDictionary)
+                self.setupCardFromUser(user: user)
+            })
         }
     }
+
+    
+    // MARK: - Private Methods
+    fileprivate func setupCardFromUser(user: User) {
+        let cardView = CardView(frame: .zero)
+        cardView.cardViewModel = user.toCardViewModel()
+        cardsDeckView.addSubview(cardView)
+        cardsDeckView.sendSubviewToBack(cardView)
+        cardView.fillSuperview()
+    }
+    
+
     
     fileprivate func setupLayout() {
-        let overallStackView = UIStackView(arrangedSubviews: [topStackView, cardsDeckView, bottomStackView])
+        self.view.backgroundColor = .white
+        let overallStackView = UIStackView(arrangedSubviews: [topStackView, cardsDeckView, bottomControls])
         overallStackView.axis = .vertical
         view.addSubview(overallStackView)
         overallStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor)
@@ -63,6 +71,14 @@ class HomeController: UIViewController {
         
         overallStackView.bringSubviewToFront(cardsDeckView)
     }
+    @objc fileprivate func handleRefresh() {
+        fetchUsersFromFirestore()
+    }
     
+    @objc fileprivate func handleSetting() {
+        let settingsController = SettingsController()
+        let navController = UINavigationController(rootViewController: settingsController)
+        present(navController, animated: true)
+    }
 }
 
