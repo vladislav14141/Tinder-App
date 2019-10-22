@@ -25,7 +25,7 @@ struct User: ProducesCardViewModel {
     init(dictionary: [String: Any]) {
         self.name = dictionary["fullName"] as? String ?? ""
         self.age = dictionary["age"] as? Int
-        self.maxSeekingAge = dictionary["minSeekingAge"] as? Int
+        self.maxSeekingAge = dictionary["maxSeekingAge"] as? Int
         self.minSeekingAge = dictionary["minSeekingAge"] as? Int 
         self.profession = dictionary["profession"] as? String
         self.imageUrl1 = dictionary["imageUrl1"] as? String

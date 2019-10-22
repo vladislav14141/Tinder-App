@@ -13,19 +13,21 @@ enum SwipeDirection {
     case left
     case none
 }
-class CardView: UIView {
 
+protocol CardViewDelegate {
+    func didTapMoreInfo(cardViewModel: CardViewModel)
+}
+class CardView: UIView {
+    let progressHUD = ProgressHUD()
+    var delegate: CardViewDelegate?
     var cardViewModel: CardViewModel! {
         didSet {
-            let imageUrlString = cardViewModel.imageNames.first ?? ""
-            if let url = URL(string: imageUrlString){
-                imageView.sd_setImage(with: url)
-            }
+            swipingPhotosController.cardViewModel = self.cardViewModel
             
             infoLabel.attributedText = cardViewModel.attributedString
             infoLabel.textAlignment = cardViewModel.textAlignment
             
-            (0..<cardViewModel.imageNames.count).forEach { (_) in
+            (0..<cardViewModel.imageUrls.count).forEach { (_) in
                  let barView = UIView()
                  barView.backgroundColor = deselectedBarColor
                  barsStackView.addArrangedSubview(barView)
@@ -36,13 +38,19 @@ class CardView: UIView {
         }
     }
     
+    fileprivate let infoButton: UIButton = {
+        let bt = UIButton(type: .system)
+        bt.setImage(UIImage(named: "icons8-info_filled")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        bt.addTarget(self, action: #selector(handleMoreInfo), for: .touchUpInside)
+
+        return bt
+    }()
 
 //   encapsulation
-    fileprivate let imageView = UIImageView(image: #imageLiteral(resourceName: "s1200-2"))
+    fileprivate let swipingPhotosController = SwipingPhotosController(isCardViewModel: true)
     fileprivate let infoLabel = UILabel()
     fileprivate let gradientLayer = CAGradientLayer()
     fileprivate var deselectedBarColor = UIColor(white: 0.2, alpha: 0.4)
-
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -72,12 +80,10 @@ class CardView: UIView {
         layer.cornerRadius = 10
         clipsToBounds = true
         
-        addSubview(imageView)
-        imageView.contentMode = .scaleAspectFill
-        imageView.fillSuperview()
-        
-        setupBarsStackView()
-        
+        let swipingPhotosView = swipingPhotosController.view!
+        addSubview(swipingPhotosView)
+        swipingPhotosView.fillSuperview()
+                
         // add gradient
         setupGradient()
         
@@ -86,6 +92,10 @@ class CardView: UIView {
         infoLabel.anchor(top: nil, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 16, bottom: 16, right: 16))
         infoLabel.textColor = .white
         infoLabel.numberOfLines = 0
+        
+        addSubview(infoButton)
+        infoButton.anchor(top: nil, leading: nil, bottom: self.bottomAnchor, trailing: self.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 16, right: 16), size: .init(width: 44, height: 44))
+        
     }
     
     fileprivate let barsStackView = UIStackView()
@@ -107,14 +117,21 @@ class CardView: UIView {
     //RXSwift
     fileprivate func setupImageIndexObserver() {
         cardViewModel.imageIndexObserver = { [unowned self] (imageUrl, i) in
+            self.backgroundColor = .black
             if let imageUrl = imageUrl, let url = URL(string: imageUrl) {
-                self.imageView.sd_setImage(with: url)
             }
             self.barsStackView.arrangedSubviews.forEach { (view) in
                 view.backgroundColor = self.deselectedBarColor
             }
             self.barsStackView.arrangedSubviews[i].backgroundColor = .white
         }
+    }
+    @objc fileprivate func handleMoreInfo(){
+//        let rootView = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController
+//        let userDetailController = UIViewController()
+//        userDetailController.view.backgroundColor = .white
+//        rootView?.present(userDetailController, animated: true)
+        delegate?.didTapMoreInfo(cardViewModel: self.cardViewModel)
     }
     
     @objc fileprivate func handleTap(gesture: UITapGestureRecognizer) {

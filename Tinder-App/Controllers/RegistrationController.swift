@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 import JGProgressHUD
-class RegistrationViewController: UIViewController  {
+class RegistrationController: UIViewController  {
     let progressHUD = ProgressHUD()
     let registrationViewModel = RegistrationViewModel()
     lazy var verticalStackView: UIStackView = {
@@ -57,6 +57,7 @@ class RegistrationViewController: UIViewController  {
     
     let emailNameTextField: UITextField = {
         let tf = CustomTextField(padding: 24, placeholder: "Enter email")
+        tf.keyboardType = .emailAddress
         tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return tf
     }()
@@ -88,9 +89,8 @@ class RegistrationViewController: UIViewController  {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         button.setTitleColor(.white, for: .normal)
         button.setTitle("Go to Login", for: .normal)
-        button.backgroundColor = #colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 1)
         button.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        
+        button.addTarget(self, action: #selector(handleGoToLogin), for: .touchUpInside)
         return button
     }()
     
@@ -109,6 +109,7 @@ class RegistrationViewController: UIViewController  {
         setupNotificationObserver()
         setupTapGesture()
         setupRegistrationViewModelObserver()
+        setupLayout()
     }
     
 
@@ -120,8 +121,7 @@ class RegistrationViewController: UIViewController  {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        setupLayout()
-        
+        gradientLayer.frame = view.bounds
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -133,20 +133,23 @@ class RegistrationViewController: UIViewController  {
     }
     
     fileprivate func setupLayout() {
+        navigationController?.isNavigationBarHidden = true
         view.layer.addSublayer(gradientLayer)
         view.addSubview(overralStackView)
       
-        gradientLayer.frame = view.bounds
         overralStackView.anchor(top: nil, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 0, right: 50))
         
         
         overralStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         selectPhotoButton.widthAnchor.constraint(lessThanOrEqualToConstant: 274).isActive = true
+        
+        view.addSubview(loginButton)
+        loginButton.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor)
     }
     
     fileprivate func setupRegistrationViewModelObserver() {
         registrationViewModel.binableIsFormValid.bind {  [unowned self] (isFormValid) in
-            if let _ = isFormValid {
+            if isFormValid ?? false {
                 self.registerButton.backgroundColor = #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1)
                 self.registerButton.setTitleColor(.white, for: .normal)
                 self.registerButton.isEnabled = true
@@ -176,6 +179,13 @@ class RegistrationViewController: UIViewController  {
         self.handleTapDismiss()
         registrationViewModel.performRegistration { [unowned self] (err) in
             self.progressHUD.showHUDWithMessage(in: self.selectPhotoButton, error: err)
+         
+            if err == nil {
+                self.dismiss(animated: true)
+//                let registrationVC = HomeController()
+//                let navController = UINavigationController(rootViewController: registrationVC)
+//                self.present(navController, animated: true)
+            }
         }
         print("Finished registering")
        
@@ -213,12 +223,18 @@ class RegistrationViewController: UIViewController  {
     @objc fileprivate func handleTapDismiss() {
         self.view.endEditing(true)
     }
+    
+    @objc fileprivate func handleGoToLogin() {
+        navigationController?.popViewController(animated: true)
+        
+    }
 }
 
-extension RegistrationViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+extension RegistrationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[.originalImage] as? UIImage
         registrationViewModel.bindableImage.value = image
+        registrationViewModel.checkFormValidity()
         dismiss(animated: true, completion: nil)
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

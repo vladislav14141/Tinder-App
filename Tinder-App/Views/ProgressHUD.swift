@@ -28,7 +28,7 @@ public class ProgressHUD: JGProgressHUD {
     
     func showProgressHUD(in view: UIView, with message: String) {
         hud.textLabel.text = message
-        hud.indicatorView = JGProgressHUDIndicatorView()
+        hud.indicatorView = JGProgressHUDIndeterminateIndicatorView()
         hud.show(in: view, animated: true)
     }
     

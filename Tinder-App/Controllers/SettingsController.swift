@@ -9,6 +9,10 @@
 import UIKit
 import Firebase
 import SDWebImage
+
+protocol SettingsControllerDelegate {
+    func didSaveSettings()
+}
 class SettingsController: UITableViewController {
     class HeaderLabel: UILabel {
         override func drawText(in rect: CGRect) {
@@ -20,7 +24,9 @@ class SettingsController: UITableViewController {
     class CustomImagePickerController: UIImagePickerController{
         var imageButton: UIButton?
     }
+    var delegate: SettingsControllerDelegate?
     
+    let loginController = LoginController()
     lazy var image1Button = createButton(selector: #selector(handleSelectPhoto))
     lazy var image2Button = createButton(selector: #selector(handleSelectPhoto))
     lazy var image3Button = createButton(selector: #selector(handleSelectPhoto))
@@ -96,9 +102,15 @@ class SettingsController: UITableViewController {
         let cell = SettingCell(style: .default, reuseIdentifier: nil)
         
         if indexPath.section == 5 {
-            guard let ageRangeCell = AgeRangeCell(style: .default, reuseIdentifier: nil) as?  AgeRangeCell else {return cell}
+             let ageRangeCell = AgeRangeCell(style: .default, reuseIdentifier: nil)
             ageRangeCell.maxSlider.addTarget(self, action: #selector(handleMaxSliderChange), for: .valueChanged)
             ageRangeCell.minSlider.addTarget(self, action: #selector(handleMinSliderChange), for: .valueChanged)
+            
+            ageRangeCell.maxLabel.text = "Max \(user?.maxSeekingAge ?? 20)"
+            ageRangeCell.minLabel.text = "Min \(user?.minSeekingAge ?? 20)"
+            ageRangeCell.maxSlider.value = Float(user?.maxSeekingAge ?? 20)
+            ageRangeCell.minSlider.value = Float(user?.minSeekingAge ?? 20)
+
             return ageRangeCell
         }
         
@@ -141,7 +153,6 @@ class SettingsController: UITableViewController {
             self.user = user
             self.loadUsersPhoto()
             self.tableView.reloadData()
-            print(user)
         }
     }
     
@@ -216,18 +227,18 @@ class SettingsController: UITableViewController {
     @objc private func handleSave(){
         guard let uid = Auth.auth().currentUser?.uid else {return}
         progressHUD.showProgressHUD(in: self.view, with: "Updating🐙")
-        let docData = [
+        let docData: [String: Any] = [
             "uid": uid,
             "fullName": user?.name ?? "",
-            "age": user?.age ?? "",
+            "age": user?.age ?? -1,
             "profession": user?.profession ?? "",
             "imageUrl1": user?.imageUrl1 ?? "",
             "imageUrl2": user?.imageUrl2 ?? "",
             "imageUrl3": user?.imageUrl3 ?? "",
             "bio": user?.bio ?? "",
-            "maxSeekingAge": user?.maxSeekingAge,
-            "minSeekingAge": user?.minSeekingAge
-            ] as [String : Any]
+            "maxSeekingAge": user?.maxSeekingAge ?? -1,
+            "minSeekingAge": user?.minSeekingAge ?? -1
+            ]
 
         Firestore.firestore().collection("users").document(uid).setData(docData) { (err) in
             if let err = err {
@@ -235,7 +246,9 @@ class SettingsController: UITableViewController {
                 return
             }
             self.progressHUD.dismiss()
-            self.dismiss(animated: true)
+            self.dismiss(animated: true) {
+                self.delegate?.didSaveSettings()
+            }
         }
     }
     
@@ -251,8 +264,9 @@ class SettingsController: UITableViewController {
     }
     
     @objc fileprivate func handleLogout() {
-        let registrationVC = RegistrationViewController()
-        show(registrationVC, sender: nil)
+        try? Auth.auth().signOut()
+        dismiss(animated: true)
+        loginController.presentLoginVC(in: delegate as! HomeController)
     }
     
     @objc fileprivate func handleTapDismiss() {
@@ -263,8 +277,8 @@ class SettingsController: UITableViewController {
         let indexPath = IndexPath(row: 0, section: 5)
         guard let ageRangeCell = tableView.cellForRow(at: indexPath) as? AgeRangeCell else {return}
         
-        var intMaxAge = Int(slider.value)
-        var intMinAge = Int(ageRangeCell.minSlider.value)
+        let intMaxAge = Int(ageRangeCell.maxSlider.value)
+        let intMinAge = Int(ageRangeCell.minSlider.value)
         self.user?.minSeekingAge = intMinAge
         self.user?.maxSeekingAge = intMaxAge
         
@@ -279,8 +293,8 @@ class SettingsController: UITableViewController {
         let indexPath = IndexPath(row: 0, section: 5)
         guard let ageRangeCell = tableView.cellForRow(at: indexPath) as? AgeRangeCell else {return}
         
-        var intMinAge = Int(slider.value)
-        var intMaxAge = Int(ageRangeCell.maxSlider.value)
+        let intMinAge = Int(ageRangeCell.minSlider.value)
+        let intMaxAge = Int(ageRangeCell.maxSlider.value)
         self.user?.minSeekingAge = intMinAge
         self.user?.maxSeekingAge = intMaxAge
 
@@ -304,7 +318,9 @@ extension SettingsController: UIImagePickerControllerDelegate, UINavigationContr
         let ref = Storage.storage().reference(withPath: "/images/\(filename)")
         guard let uploadData = selectedImage?.jpegData(compressionQuality: 0.75) else {return}
         progressHUD.showUploadingProgressHUD(in: self.view, progress: 1000.74, with: "Uploading image...")
-        ref.putData(uploadData, metadata: nil) { (_, err) in
+        ref.putData(uploadData, metadata: nil) { (data, err) in
+            
+            
             if let err = err{
                 self.progressHUD.showHUDWithMessage(in: self.view, error: err)
                 return
@@ -316,6 +332,8 @@ extension SettingsController: UIImagePickerControllerDelegate, UINavigationContr
                     self.progressHUD.showHUDWithMessage(in: self.view, error: err)
                     return
                 }
+                
+                
                 
                 switch imageButton {
                 case self.image1Button: self.user?.imageUrl1 = url?.absoluteString

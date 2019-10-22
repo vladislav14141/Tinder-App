@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A6905BD862594770F6D68FE5 /* Pods_Tinder_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02681ED88248D2519A652EA8 /* Pods_Tinder_App.framework */; };
+		DF201A02235817A3006E663D /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF201A00235817A2006E663D /* LoginController.swift */; };
+		DF201A0423581D37006E663D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF201A0323581D37006E663D /* LoginViewModel.swift */; };
 		DF561ACA2349BA330014F909 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561AC92349BA330014F909 /* AppDelegate.swift */; };
 		DF561ACC2349BA330014F909 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561ACB2349BA330014F909 /* SceneDelegate.swift */; };
 		DF561ACE2349BA330014F909 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561ACD2349BA330014F909 /* HomeController.swift */; };
@@ -21,7 +23,7 @@
 		DF561AE9234C901E0014F909 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561AE8234C901E0014F909 /* User.swift */; };
 		DF561AED234C9F570014F909 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561AEC234C9F570014F909 /* CardViewModel.swift */; };
 		DF561AEF234DBC6A0014F909 /* Advertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561AEE234DBC6A0014F909 /* Advertiser.swift */; };
-		DF561AF1234F35320014F909 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561AF0234F35320014F909 /* RegistrationViewController.swift */; };
+		DF561AF1234F35320014F909 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561AF0234F35320014F909 /* RegistrationController.swift */; };
 		DF561AF3234F43D90014F909 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561AF2234F43D90014F909 /* CustomTextField.swift */; };
 		DF561AF52350A1860014F909 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561AF42350A1860014F909 /* RegistrationViewModel.swift */; };
 		DF561AF723530EE90014F909 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF561AF623530EE90014F909 /* GoogleService-Info.plist */; };
@@ -30,12 +32,16 @@
 		DF561AFD2355734C0014F909 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561AFC2355734C0014F909 /* SettingsController.swift */; };
 		DF561AFF2355B2680014F909 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561AFE2355B2680014F909 /* SettingCell.swift */; };
 		DF561B012356AF740014F909 /* AgeRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561B002356AF740014F909 /* AgeRangeCell.swift */; };
+		DF82A6142359D7BD00C6BDDB /* UserDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF82A6132359D7BD00C6BDDB /* UserDetailController.swift */; };
+		DF82A616235BFC9E00C6BDDB /* SwipingPhotosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF82A615235BFC9E00C6BDDB /* SwipingPhotosController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		02681ED88248D2519A652EA8 /* Pods_Tinder_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tinder_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D3D8FB7B2B7605DB6B34219 /* Pods-Tinder-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tinder-App.release.xcconfig"; path = "Target Support Files/Pods-Tinder-App/Pods-Tinder-App.release.xcconfig"; sourceTree = "<group>"; };
 		4827C1DB6D667CD6485126ED /* Pods-Tinder-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tinder-App.debug.xcconfig"; path = "Target Support Files/Pods-Tinder-App/Pods-Tinder-App.debug.xcconfig"; sourceTree = "<group>"; };
+		DF201A00235817A2006E663D /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		DF201A0323581D37006E663D /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		DF561AC62349BA330014F909 /* Tinder-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tinder-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF561AC92349BA330014F909 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DF561ACB2349BA330014F909 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,7 +57,7 @@
 		DF561AE8234C901E0014F909 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DF561AEC234C9F570014F909 /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
 		DF561AEE234DBC6A0014F909 /* Advertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertiser.swift; sourceTree = "<group>"; };
-		DF561AF0234F35320014F909 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
+		DF561AF0234F35320014F909 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		DF561AF2234F43D90014F909 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		DF561AF42350A1860014F909 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		DF561AF623530EE90014F909 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -60,6 +66,8 @@
 		DF561AFC2355734C0014F909 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		DF561AFE2355B2680014F909 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		DF561B002356AF740014F909 /* AgeRangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeRangeCell.swift; sourceTree = "<group>"; };
+		DF82A6132359D7BD00C6BDDB /* UserDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailController.swift; sourceTree = "<group>"; };
+		DF82A615235BFC9E00C6BDDB /* SwipingPhotosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingPhotosController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,7 +148,10 @@
 		DF561AE02349CF2F0014F909 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DF82A615235BFC9E00C6BDDB /* SwipingPhotosController.swift */,
 				DF561AE32349F31B0014F909 /* TopNavigationStackView.swift */,
+				DF561B002356AF740014F909 /* AgeRangeCell.swift */,
+				DF561AFE2355B2680014F909 /* SettingCell.swift */,
 				DF561AE5234B58480014F909 /* CardView.swift */,
 				DF561AE12349D0080014F909 /* HomeBottomControlStackView.swift */,
 				DF561AF2234F43D90014F909 /* CustomTextField.swift */,
@@ -162,8 +173,10 @@
 			isa = PBXGroup;
 			children = (
 				DF561ACD2349BA330014F909 /* HomeController.swift */,
-				DF561B022356B24E0014F909 /* Settings */,
-				DF561AF0234F35320014F909 /* RegistrationViewController.swift */,
+				DF82A6132359D7BD00C6BDDB /* UserDetailController.swift */,
+				DF561AFC2355734C0014F909 /* SettingsController.swift */,
+				DF561AF0234F35320014F909 /* RegistrationController.swift */,
+				DF201A00235817A2006E663D /* LoginController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -173,18 +186,9 @@
 			children = (
 				DF561AEC234C9F570014F909 /* CardViewModel.swift */,
 				DF561AF42350A1860014F909 /* RegistrationViewModel.swift */,
+				DF201A0323581D37006E663D /* LoginViewModel.swift */,
 			);
 			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		DF561B022356B24E0014F909 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				DF561AFC2355734C0014F909 /* SettingsController.swift */,
-				DF561AFE2355B2680014F909 /* SettingCell.swift */,
-				DF561B002356AF740014F909 /* AgeRangeCell.swift */,
-			);
-			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -307,11 +311,13 @@
 				DF561AEF234DBC6A0014F909 /* Advertiser.swift in Sources */,
 				DF561AE6234B58480014F909 /* CardView.swift in Sources */,
 				DF561ACE2349BA330014F909 /* HomeController.swift in Sources */,
-				DF561AF1234F35320014F909 /* RegistrationViewController.swift in Sources */,
+				DF561AF1234F35320014F909 /* RegistrationController.swift in Sources */,
 				DF561ACA2349BA330014F909 /* AppDelegate.swift in Sources */,
 				DF561AE22349D0080014F909 /* HomeBottomControlStackView.swift in Sources */,
 				DF561AE9234C901E0014F909 /* User.swift in Sources */,
+				DF201A0423581D37006E663D /* LoginViewModel.swift in Sources */,
 				DF561AE42349F31B0014F909 /* TopNavigationStackView.swift in Sources */,
+				DF201A02235817A3006E663D /* LoginController.swift in Sources */,
 				DF561B012356AF740014F909 /* AgeRangeCell.swift in Sources */,
 				DF561AFD2355734C0014F909 /* SettingsController.swift in Sources */,
 				DF561AFB23541D590014F909 /* ProgressHUD.swift in Sources */,
@@ -319,7 +325,9 @@
 				DF561AF3234F43D90014F909 /* CustomTextField.swift in Sources */,
 				DF561AF52350A1860014F909 /* RegistrationViewModel.swift in Sources */,
 				DF561ADF2349BFDA0014F909 /* Extensions+UIView.swift in Sources */,
+				DF82A6142359D7BD00C6BDDB /* UserDetailController.swift in Sources */,
 				DF561ACC2349BA330014F909 /* SceneDelegate.swift in Sources */,
+				DF82A616235BFC9E00C6BDDB /* SwipingPhotosController.swift in Sources */,
 				DF561AED234C9F570014F909 /* CardViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -468,6 +476,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T7BM86Q6MS;
 				INFOPLIST_FILE = "Tinder-App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -487,6 +496,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T7BM86Q6MS;
 				INFOPLIST_FILE = "Tinder-App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
