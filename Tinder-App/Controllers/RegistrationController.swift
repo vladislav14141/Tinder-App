@@ -177,14 +177,13 @@ class RegistrationController: UIViewController  {
     
     @objc fileprivate func handleRegister() {
         self.handleTapDismiss()
-        registrationViewModel.performRegistration { [unowned self] (err) in
-            self.progressHUD.showHUDWithMessage(in: self.selectPhotoButton, error: err)
+        registrationViewModel.performRegistration { [weak self] (err) in
+            
          
-            if err == nil {
-                self.dismiss(animated: true)
-//                let registrationVC = HomeController()
-//                let navController = UINavigationController(rootViewController: registrationVC)
-//                self.present(navController, animated: true)
+            if let err = err {
+                self?.progressHUD.showHUDWithMessage(in: self?.selectPhotoButton ?? self!.view, error: err)
+            } else {
+                self?.dismiss(animated: true)
             }
         }
         print("Finished registering")

@@ -152,5 +152,4 @@ class LoginController: UIViewController {
     @objc fileprivate func handleTapDismiss() {
         self.view.endEditing(true)
     }
-
 }

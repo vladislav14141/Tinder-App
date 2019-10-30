@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = HomeController()
+            window.rootViewController = UINavigationController(rootViewController: HomeController())
 //            window.rootViewController = SwipingPhotosController(transitionStyle: .scroll, navigationOrientation: .horizontal)
             window.overrideUserInterfaceStyle = .light
             self.window = window

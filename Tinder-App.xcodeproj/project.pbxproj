@@ -7,16 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A6905BD862594770F6D68FE5 /* Pods_Tinder_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02681ED88248D2519A652EA8 /* Pods_Tinder_App.framework */; };
 		DF201A02235817A3006E663D /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF201A00235817A2006E663D /* LoginController.swift */; };
 		DF201A0423581D37006E663D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF201A0323581D37006E663D /* LoginViewModel.swift */; };
+		DF50AE122362C1C800918593 /* SendMessageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF50AE112362C1C800918593 /* SendMessageButton.swift */; };
+		DF50AE142362CD1600918593 /* KeepSwipingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF50AE132362CD1600918593 /* KeepSwipingButton.swift */; };
+		DF524FD72366E49900A689E8 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF524FD62366E49900A689E8 /* ChatLogController.swift */; };
+		DF524FD92366F64100A689E8 /* MessagesNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF524FD82366F64100A689E8 /* MessagesNavBar.swift */; };
+		DF524FDC23697B8500A689E8 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF524FDB23697B8500A689E8 /* Message.swift */; };
+		DF524FDE23697BF400A689E8 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF524FDD23697BF400A689E8 /* MessageCell.swift */; };
+		DF524FE023697C6B00A689E8 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF524FDF23697C6B00A689E8 /* CustomTextView.swift */; };
+		DF524FE22369812D00A689E8 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF524FE12369812D00A689E8 /* Match.swift */; };
+		DF524FE5236994B800A689E8 /* MatchesHorizontalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF524FE4236994B800A689E8 /* MatchesHorizontalController.swift */; };
+		DF524FE72369954B00A689E8 /* MatchesHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF524FE62369954B00A689E8 /* MatchesHeader.swift */; };
+		DF524FE92369AEA300A689E8 /* RecentMatchesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF524FE82369AEA300A689E8 /* RecentMatchesCell.swift */; };
 		DF561ACA2349BA330014F909 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561AC92349BA330014F909 /* AppDelegate.swift */; };
 		DF561ACC2349BA330014F909 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561ACB2349BA330014F909 /* SceneDelegate.swift */; };
 		DF561ACE2349BA330014F909 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561ACD2349BA330014F909 /* HomeController.swift */; };
 		DF561AD12349BA330014F909 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF561ACF2349BA330014F909 /* Main.storyboard */; };
 		DF561AD32349BA350014F909 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF561AD22349BA350014F909 /* Assets.xcassets */; };
 		DF561AD62349BA350014F909 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF561AD42349BA350014F909 /* LaunchScreen.storyboard */; };
-		DF561ADF2349BFDA0014F909 /* Extensions+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561ADE2349BFDA0014F909 /* Extensions+UIView.swift */; };
 		DF561AE22349D0080014F909 /* HomeBottomControlStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561AE12349D0080014F909 /* HomeBottomControlStackView.swift */; };
 		DF561AE42349F31B0014F909 /* TopNavigationStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561AE32349F31B0014F909 /* TopNavigationStackView.swift */; };
 		DF561AE6234B58480014F909 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561AE5234B58480014F909 /* CardView.swift */; };
@@ -32,9 +41,30 @@
 		DF561AFD2355734C0014F909 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561AFC2355734C0014F909 /* SettingsController.swift */; };
 		DF561AFF2355B2680014F909 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561AFE2355B2680014F909 /* SettingCell.swift */; };
 		DF561B012356AF740014F909 /* AgeRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF561B002356AF740014F909 /* AgeRangeCell.swift */; };
+		DF6D67CD2364452900201239 /* Pods_Tinder_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02681ED88248D2519A652EA8 /* Pods_Tinder_App.framework */; };
+		DF6D67CE2364452900201239 /* Pods_Tinder_App.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 02681ED88248D2519A652EA8 /* Pods_Tinder_App.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DF6D67D123644CFE00201239 /* MatchesMessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6D67D023644CFE00201239 /* MatchesMessagesController.swift */; };
+		DF6D67D323653B7E00201239 /* MatchesNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6D67D223653B7E00201239 /* MatchesNavBar.swift */; };
+		DF6D67D523653F3700201239 /* MatchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6D67D423653F3700201239 /* MatchCell.swift */; };
+		DF6D67DA23659EA900201239 /* Log<T>.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6D67D923659EA900201239 /* Log<T>.swift */; };
 		DF82A6142359D7BD00C6BDDB /* UserDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF82A6132359D7BD00C6BDDB /* UserDetailController.swift */; };
 		DF82A616235BFC9E00C6BDDB /* SwipingPhotosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF82A615235BFC9E00C6BDDB /* SwipingPhotosController.swift */; };
+		DF82A6182361B0B500C6BDDB /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF82A6172361B0B500C6BDDB /* MatchView.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DF6D67CF2364452900201239 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				DF6D67CE2364452900201239 /* Pods_Tinder_App.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		02681ED88248D2519A652EA8 /* Pods_Tinder_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tinder_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -42,6 +72,17 @@
 		4827C1DB6D667CD6485126ED /* Pods-Tinder-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tinder-App.debug.xcconfig"; path = "Target Support Files/Pods-Tinder-App/Pods-Tinder-App.debug.xcconfig"; sourceTree = "<group>"; };
 		DF201A00235817A2006E663D /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		DF201A0323581D37006E663D /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		DF50AE112362C1C800918593 /* SendMessageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageButton.swift; sourceTree = "<group>"; };
+		DF50AE132362CD1600918593 /* KeepSwipingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeepSwipingButton.swift; sourceTree = "<group>"; };
+		DF524FD62366E49900A689E8 /* ChatLogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
+		DF524FD82366F64100A689E8 /* MessagesNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesNavBar.swift; sourceTree = "<group>"; };
+		DF524FDB23697B8500A689E8 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		DF524FDD23697BF400A689E8 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		DF524FDF23697C6B00A689E8 /* CustomTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextView.swift; sourceTree = "<group>"; };
+		DF524FE12369812D00A689E8 /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
+		DF524FE4236994B800A689E8 /* MatchesHorizontalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesHorizontalController.swift; sourceTree = "<group>"; };
+		DF524FE62369954B00A689E8 /* MatchesHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesHeader.swift; sourceTree = "<group>"; };
+		DF524FE82369AEA300A689E8 /* RecentMatchesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMatchesCell.swift; sourceTree = "<group>"; };
 		DF561AC62349BA330014F909 /* Tinder-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tinder-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF561AC92349BA330014F909 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DF561ACB2349BA330014F909 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -50,7 +91,6 @@
 		DF561AD22349BA350014F909 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DF561AD52349BA350014F909 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DF561AD72349BA350014F909 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DF561ADE2349BFDA0014F909 /* Extensions+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extensions+UIView.swift"; sourceTree = "<group>"; };
 		DF561AE12349D0080014F909 /* HomeBottomControlStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomControlStackView.swift; sourceTree = "<group>"; };
 		DF561AE32349F31B0014F909 /* TopNavigationStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigationStackView.swift; sourceTree = "<group>"; };
 		DF561AE5234B58480014F909 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
@@ -66,8 +106,13 @@
 		DF561AFC2355734C0014F909 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		DF561AFE2355B2680014F909 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		DF561B002356AF740014F909 /* AgeRangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeRangeCell.swift; sourceTree = "<group>"; };
+		DF6D67D023644CFE00201239 /* MatchesMessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesMessagesController.swift; sourceTree = "<group>"; };
+		DF6D67D223653B7E00201239 /* MatchesNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesNavBar.swift; sourceTree = "<group>"; };
+		DF6D67D423653F3700201239 /* MatchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCell.swift; sourceTree = "<group>"; };
+		DF6D67D923659EA900201239 /* Log<T>.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Log<T>.swift"; sourceTree = "<group>"; };
 		DF82A6132359D7BD00C6BDDB /* UserDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailController.swift; sourceTree = "<group>"; };
 		DF82A615235BFC9E00C6BDDB /* SwipingPhotosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingPhotosController.swift; sourceTree = "<group>"; };
+		DF82A6172361B0B500C6BDDB /* MatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,7 +120,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A6905BD862594770F6D68FE5 /* Pods_Tinder_App.framework in Frameworks */,
+				DF6D67CD2364452900201239 /* Pods_Tinder_App.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,6 +142,55 @@
 				02681ED88248D2519A652EA8 /* Pods_Tinder_App.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DF50AE1523630B7D00918593 /* MatchView */ = {
+			isa = PBXGroup;
+			children = (
+				DF82A6172361B0B500C6BDDB /* MatchView.swift */,
+				DF50AE112362C1C800918593 /* SendMessageButton.swift */,
+				DF50AE132362CD1600918593 /* KeepSwipingButton.swift */,
+			);
+			path = MatchView;
+			sourceTree = "<group>";
+		};
+		DF50AE1623630BAC00918593 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				DF561B002356AF740014F909 /* AgeRangeCell.swift */,
+				DF561AFE2355B2680014F909 /* SettingCell.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		DF50AE1723630BCF00918593 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				DF82A615235BFC9E00C6BDDB /* SwipingPhotosController.swift */,
+				DF561AE32349F31B0014F909 /* TopNavigationStackView.swift */,
+				DF561AE5234B58480014F909 /* CardView.swift */,
+				DF561AE12349D0080014F909 /* HomeBottomControlStackView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		DF524FDA23697B4A00A689E8 /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				DF524FD82366F64100A689E8 /* MessagesNavBar.swift */,
+				DF524FDD23697BF400A689E8 /* MessageCell.swift */,
+				DF524FDF23697C6B00A689E8 /* CustomTextView.swift */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
+		DF524FEA2369AF0700A689E8 /* HorizontalMatchView */ = {
+			isa = PBXGroup;
+			children = (
+				DF524FE4236994B800A689E8 /* MatchesHorizontalController.swift */,
+				DF6D67D423653F3700201239 /* MatchCell.swift */,
+			);
+			path = HorizontalMatchView;
 			sourceTree = "<group>";
 		};
 		DF561ABD2349BA330014F909 = {
@@ -139,8 +233,9 @@
 		DF561ADD2349BF610014F909 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				DF6D67D923659EA900201239 /* Log<T>.swift */,
+				DF561AFA23541D590014F909 /* ProgressHUD.swift */,
 				DF561AF82353402E0014F909 /* Bindable.swift */,
-				DF561ADE2349BFDA0014F909 /* Extensions+UIView.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -148,14 +243,12 @@
 		DF561AE02349CF2F0014F909 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				DF82A615235BFC9E00C6BDDB /* SwipingPhotosController.swift */,
-				DF561AE32349F31B0014F909 /* TopNavigationStackView.swift */,
-				DF561B002356AF740014F909 /* AgeRangeCell.swift */,
-				DF561AFE2355B2680014F909 /* SettingCell.swift */,
-				DF561AE5234B58480014F909 /* CardView.swift */,
-				DF561AE12349D0080014F909 /* HomeBottomControlStackView.swift */,
-				DF561AF2234F43D90014F909 /* CustomTextField.swift */,
-				DF561AFA23541D590014F909 /* ProgressHUD.swift */,
+				DF524FDA23697B4A00A689E8 /* Message */,
+				DF6D67D623653F3D00201239 /* Match */,
+				DF50AE1723630BCF00918593 /* Home */,
+				DF50AE1623630BAC00918593 /* Settings */,
+				DF6D67D82365437700201239 /* Registration */,
+				DF50AE1523630B7D00918593 /* MatchView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -164,7 +257,9 @@
 			isa = PBXGroup;
 			children = (
 				DF561AE8234C901E0014F909 /* User.swift */,
+				DF524FDB23697B8500A689E8 /* Message.swift */,
 				DF561AEE234DBC6A0014F909 /* Advertiser.swift */,
+				DF524FE12369812D00A689E8 /* Match.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -177,6 +272,8 @@
 				DF561AFC2355734C0014F909 /* SettingsController.swift */,
 				DF561AF0234F35320014F909 /* RegistrationController.swift */,
 				DF201A00235817A2006E663D /* LoginController.swift */,
+				DF6D67D023644CFE00201239 /* MatchesMessagesController.swift */,
+				DF524FD62366E49900A689E8 /* ChatLogController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -191,6 +288,25 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		DF6D67D623653F3D00201239 /* Match */ = {
+			isa = PBXGroup;
+			children = (
+				DF524FEA2369AF0700A689E8 /* HorizontalMatchView */,
+				DF6D67D223653B7E00201239 /* MatchesNavBar.swift */,
+				DF524FE82369AEA300A689E8 /* RecentMatchesCell.swift */,
+				DF524FE62369954B00A689E8 /* MatchesHeader.swift */,
+			);
+			path = Match;
+			sourceTree = "<group>";
+		};
+		DF6D67D82365437700201239 /* Registration */ = {
+			isa = PBXGroup;
+			children = (
+				DF561AF2234F43D90014F909 /* CustomTextField.swift */,
+			);
+			path = Registration;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -203,6 +319,7 @@
 				DF561AC32349BA330014F909 /* Frameworks */,
 				DF561AC42349BA330014F909 /* Resources */,
 				D6B6CA8CFF23E05EAD3645FA /* [CP] Embed Pods Frameworks */,
+				DF6D67CF2364452900201239 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -307,28 +424,43 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF524FE72369954B00A689E8 /* MatchesHeader.swift in Sources */,
+				DF6D67D523653F3700201239 /* MatchCell.swift in Sources */,
 				DF561AFF2355B2680014F909 /* SettingCell.swift in Sources */,
 				DF561AEF234DBC6A0014F909 /* Advertiser.swift in Sources */,
 				DF561AE6234B58480014F909 /* CardView.swift in Sources */,
 				DF561ACE2349BA330014F909 /* HomeController.swift in Sources */,
+				DF524FE023697C6B00A689E8 /* CustomTextView.swift in Sources */,
+				DF524FE92369AEA300A689E8 /* RecentMatchesCell.swift in Sources */,
 				DF561AF1234F35320014F909 /* RegistrationController.swift in Sources */,
+				DF524FE5236994B800A689E8 /* MatchesHorizontalController.swift in Sources */,
 				DF561ACA2349BA330014F909 /* AppDelegate.swift in Sources */,
 				DF561AE22349D0080014F909 /* HomeBottomControlStackView.swift in Sources */,
 				DF561AE9234C901E0014F909 /* User.swift in Sources */,
+				DF50AE142362CD1600918593 /* KeepSwipingButton.swift in Sources */,
+				DF82A6182361B0B500C6BDDB /* MatchView.swift in Sources */,
+				DF524FD92366F64100A689E8 /* MessagesNavBar.swift in Sources */,
 				DF201A0423581D37006E663D /* LoginViewModel.swift in Sources */,
 				DF561AE42349F31B0014F909 /* TopNavigationStackView.swift in Sources */,
 				DF201A02235817A3006E663D /* LoginController.swift in Sources */,
+				DF6D67D123644CFE00201239 /* MatchesMessagesController.swift in Sources */,
 				DF561B012356AF740014F909 /* AgeRangeCell.swift in Sources */,
+				DF524FDE23697BF400A689E8 /* MessageCell.swift in Sources */,
 				DF561AFD2355734C0014F909 /* SettingsController.swift in Sources */,
 				DF561AFB23541D590014F909 /* ProgressHUD.swift in Sources */,
 				DF561AF92353402E0014F909 /* Bindable.swift in Sources */,
+				DF524FDC23697B8500A689E8 /* Message.swift in Sources */,
 				DF561AF3234F43D90014F909 /* CustomTextField.swift in Sources */,
 				DF561AF52350A1860014F909 /* RegistrationViewModel.swift in Sources */,
-				DF561ADF2349BFDA0014F909 /* Extensions+UIView.swift in Sources */,
+				DF524FE22369812D00A689E8 /* Match.swift in Sources */,
 				DF82A6142359D7BD00C6BDDB /* UserDetailController.swift in Sources */,
 				DF561ACC2349BA330014F909 /* SceneDelegate.swift in Sources */,
+				DF6D67DA23659EA900201239 /* Log<T>.swift in Sources */,
+				DF50AE122362C1C800918593 /* SendMessageButton.swift in Sources */,
 				DF82A616235BFC9E00C6BDDB /* SwipingPhotosController.swift in Sources */,
 				DF561AED234C9F570014F909 /* CardViewModel.swift in Sources */,
+				DF524FD72366E49900A689E8 /* ChatLogController.swift in Sources */,
+				DF6D67D323653B7E00201239 /* MatchesNavBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,7 +604,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4827C1DB6D667CD6485126ED /* Pods-Tinder-App.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T7BM86Q6MS;
 				INFOPLIST_FILE = "Tinder-App/Info.plist";
@@ -492,7 +623,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2D3D8FB7B2B7605DB6B34219 /* Pods-Tinder-App.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T7BM86Q6MS;
 				INFOPLIST_FILE = "Tinder-App/Info.plist";

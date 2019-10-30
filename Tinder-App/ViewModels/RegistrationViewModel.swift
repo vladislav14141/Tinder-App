@@ -60,7 +60,8 @@ class RegistrationViewModel {
         let docData: [String : Any] = ["fullName": fullName ?? "",
                                        "uid": uid, "imageUrl1": imageURL,
                                        "minSeekingAge": 18,
-                                       "maxSeekingAge":40
+                                       "maxSeekingAge":40,
+                                       "age": 20
                                         ]
         Firestore.firestore().collection("users").document(uid).setData(docData) { (err) in
             if let err = err {

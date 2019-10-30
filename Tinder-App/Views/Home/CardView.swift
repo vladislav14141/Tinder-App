@@ -16,10 +16,17 @@ enum SwipeDirection {
 
 protocol CardViewDelegate {
     func didTapMoreInfo(cardViewModel: CardViewModel)
+    func didRemoveCard(cardView: CardView)
 }
 class CardView: UIView {
     let progressHUD = ProgressHUD()
     var delegate: CardViewDelegate?
+//    var nextCardView: CardView?
+    fileprivate let swipingPhotosController = SwipingPhotosController(isCardViewModel: true)
+    fileprivate let infoLabel = UILabel()
+    fileprivate let gradientLayer = CAGradientLayer()
+    fileprivate var deselectedBarColor = UIColor(white: 0.2, alpha: 0.4)
+    
     var cardViewModel: CardViewModel! {
         didSet {
             swipingPhotosController.cardViewModel = self.cardViewModel
@@ -45,12 +52,6 @@ class CardView: UIView {
 
         return bt
     }()
-
-//   encapsulation
-    fileprivate let swipingPhotosController = SwipingPhotosController(isCardViewModel: true)
-    fileprivate let infoLabel = UILabel()
-    fileprivate let gradientLayer = CAGradientLayer()
-    fileprivate var deselectedBarColor = UIColor(white: 0.2, alpha: 0.4)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -69,7 +70,6 @@ class CardView: UIView {
     }
     
     override func layoutSubviews() {
-        // in here you know what CardView frame will be
         gradientLayer.frame = self.frame
     }
     
@@ -118,19 +118,14 @@ class CardView: UIView {
     fileprivate func setupImageIndexObserver() {
         cardViewModel.imageIndexObserver = { [unowned self] (imageUrl, i) in
             self.backgroundColor = .black
-            if let imageUrl = imageUrl, let url = URL(string: imageUrl) {
-            }
             self.barsStackView.arrangedSubviews.forEach { (view) in
                 view.backgroundColor = self.deselectedBarColor
             }
             self.barsStackView.arrangedSubviews[i].backgroundColor = .white
         }
     }
+    
     @objc fileprivate func handleMoreInfo(){
-//        let rootView = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController
-//        let userDetailController = UIViewController()
-//        userDetailController.view.backgroundColor = .white
-//        rootView?.present(userDetailController, animated: true)
         delegate?.didTapMoreInfo(cardViewModel: self.cardViewModel)
     }
     
@@ -183,28 +178,38 @@ class CardView: UIView {
             direction = .left
         }
         
-        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
-            
-            switch direction {
-            case .right:
-                self.transform = CGAffineTransform(translationX: self.frame.width * 2, y: 0)
-            case .left:
-                self.transform = CGAffineTransform(translationX: -self.frame.width * 2, y: 0)
-            case .none:
-                self.transform = .identity
-            }
-        }) { (_) in
-
-            switch direction {
-            case .right:
-                self.removeFromSuperview()
-            case .left:
-                self.transform = .identity
-            case .none:
-                self.transform = .identity
-            }
-            
+        guard let homeController = self.delegate as? HomeController else {return}
+        switch direction {
+        case .right:
+            homeController.handleLike()
+        case .left:
+            homeController.handleDislike(sender: nil)
+            print(" ")
+        case .none:
+            self.transform = .identity
         }
+//        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
+//
+//            switch direction {
+//            case .right:
+//                self.transform = CGAffineTransform(translationX: self.frame.width * 2, y: 0)
+//            case .left:
+//                self.transform = CGAffineTransform(translationX: -self.frame.width * 2, y: 0)
+//            case .none:
+//                self.transform = .identity
+//            }
+//        }) { (_) in
+//
+//            switch direction {
+//            case .right:
+//                self.delegate?.didRemoveCard(cardView: self)
+//            case .left:
+//                self.transform = .identity
+//            case .none:
+//                self.transform = .identity
+//            }
+//
+//        }
     }
     
 }

@@ -13,10 +13,10 @@ protocol ProducesCardViewModel {
 }
 
 class CardViewModel {
+    let UID: String
     let imageUrls: [String]
     let attributedString: NSAttributedString
     let textAlignment: NSTextAlignment
-    
     private var imageIndex = 0 {
         didSet {
             let imageUrl = imageUrls[imageIndex]
@@ -24,10 +24,11 @@ class CardViewModel {
         }
     }
     
-    init(imageNames: [String], attributedString: NSAttributedString, textAlignment:  NSTextAlignment) {
+    init(imageNames: [String], attributedString: NSAttributedString, textAlignment:  NSTextAlignment, uid: String) {
         self.imageUrls = imageNames
         self.attributedString = attributedString
         self.textAlignment = textAlignment
+        self.UID = uid
     }
     
     // Reactive Programming
