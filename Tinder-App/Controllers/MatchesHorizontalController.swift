@@ -9,7 +9,7 @@
 import LBTATools
 import Firebase
 class MatchesHorizontalController: LBTAListController<MatchCell, Match>,UICollectionViewDelegateFlowLayout{
-    var rootMatchesController: MatchesMessagesController?
+    weak var rootMatchesController: MatchesMessagesController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,10 +32,12 @@ class MatchesHorizontalController: LBTAListController<MatchCell, Match>,UICollec
             snapshot?.documents.forEach({ (document) in
                 matches.append(.init(dictionary: document.data()))
             })
+            print(matches)
             self.items = matches
             self.collectionView.reloadData()
         }
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return .init(top: 0, left: 4, bottom: 0, right: 4)
@@ -44,6 +46,8 @@ class MatchesHorizontalController: LBTAListController<MatchCell, Match>,UICollec
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: 100, height: view.frame.height)
     }
+
+    
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let match = items[indexPath.item]

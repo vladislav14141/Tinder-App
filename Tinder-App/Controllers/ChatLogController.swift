@@ -10,6 +10,8 @@ import LBTATools
 import Firebase
 
 class ChatLogController: LBTAListController<MessageCell,Message>, UICollectionViewDelegateFlowLayout{
+    var listener: ListenerRegistration?
+    
     let match: Match
     
     lazy var customNavBar = MessageNavBar(match: self.match)
@@ -37,13 +39,36 @@ class ChatLogController: LBTAListController<MessageCell,Message>, UICollectionVi
     override var canBecomeFirstResponder: Bool{
         return true
     }
-
+    var currentUser: User?
+    fileprivate func fetchCurrentUser(){
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        Firestore.firestore().collection("users").document(uid).getDocument { (snapshot, err) in
+            if let err = err{
+                Log(err)
+            }
+            let data = snapshot?.data() ?? [:]
+            self.currentUser = User(dictionary: data)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(handleScrollToBottomItem), name: UIResponder.keyboardDidShowNotification, object: nil)
+        fetchCurrentUser()
         setupUI()
         fetchMessages()
+    }
+    
+    deinit {
+        Log("ChatLogController was deinited")
+    }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if isMovingFromParent{
+                listener?.remove()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -63,8 +88,7 @@ class ChatLogController: LBTAListController<MessageCell,Message>, UICollectionVi
         guard let uid = Auth.auth().currentUser?.uid else {return}
         let query = Firestore.firestore().collection("matches_messages").document(uid).collection(match.uid).order(by: "timestamp")
         
-        query.addSnapshotListener { (snapshot, err) in
-            
+        listener = query.addSnapshotListener { (snapshot, err) in
             if let err = err{
                 Log(err)
             }
@@ -94,17 +118,14 @@ class ChatLogController: LBTAListController<MessageCell,Message>, UICollectionVi
         view.addSubview(statusBarCover)
         statusBarCover.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, trailing: view.trailingAnchor)
     }
-    
-    @objc fileprivate func handleSend(){
+    fileprivate func saveToFromMessages(){
         guard let currentUserId = Auth.auth().currentUser?.uid else {return}
         let CurrentUserCollection = Firestore.firestore().collection("matches_messages").document(currentUserId).collection(match.uid)
         let data: [String: Any] = ["text": customAccessView.textView.text ?? "", "fromId": currentUserId, "toId": match.uid, "timestamp": Timestamp(date: Date())]
-        
         CurrentUserCollection.addDocument(data: data) { (err) in
             if let err = err{
                 Log(err)
             }
-            
             self.customAccessView.textView.text = nil
             self.customAccessView.placeholderLabel.isHidden = false
         }
@@ -115,6 +136,31 @@ class ChatLogController: LBTAListController<MessageCell,Message>, UICollectionVi
                 Log(err)
             }
         }
+    }
+        
+    fileprivate func saveToFromRecenetMessages(){
+        guard let currentUserId = Auth.auth().currentUser?.uid else {return}
+        let data: [String: Any] = ["uid":match.uid, "text": customAccessView.textView.text ?? "", "name": match.name, "profileImageUrl": match.profileImageUrl, "timestamp": Timestamp(date: Date())]
+        Firestore.firestore().collection("matches_messages").document(currentUserId).collection("recent_messages").document(match.uid).setData(data) { (err) in
+            
+            if let err = err{
+                Log(err)    
+            }
+        }
+        
+        guard let currentUser = self.currentUser else {return}
+        let toData: [String: Any] = ["uid":currentUserId, "text": customAccessView.textView.text ?? "", "name": currentUser.name ?? "", "profileImageUrl": currentUser.imageUrl1 ?? "", "timestamp": Timestamp(date: Date())]
+        Firestore.firestore().collection("matches_messages").document(match.uid).collection("recent_messages").document(currentUserId).setData(toData) { (err) in
+             
+             if let err = err{
+                 Log(err)
+             }
+         }
+    }
+    
+    @objc fileprivate func handleSend(){
+        saveToFromMessages()
+        saveToFromRecenetMessages()
     }
     
     @objc fileprivate func handleScrollToBottomItem(){

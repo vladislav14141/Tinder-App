@@ -14,7 +14,7 @@ class SwipingPhotosController: UIPageViewController, UIPageViewControllerDataSou
     fileprivate let deselectedBarColor = UIColor(white: 0, alpha: 0.2)
     var cardViewModel: CardViewModel!{
         didSet {
-            controllers = cardViewModel.imageUrls.map({ (imageUrl) -> UIViewController in
+            controllers = cardViewModel.imageUrls.filter({$0 != ""}).map({ (imageUrl) -> UIViewController in
                 let photoController = PhotoController(imageUrl: imageUrl)
                 return photoController
             })
@@ -94,7 +94,7 @@ class SwipingPhotosController: UIPageViewController, UIPageViewControllerDataSou
     }
     
     private func setupBarViews(){
-        cardViewModel.imageUrls.forEach { (_) in
+        cardViewModel.imageUrls.filter({$0 != ""}).forEach { (_) in
             let barView = UIView()
             barView.backgroundColor = deselectedBarColor
             barView.layer.cornerRadius = 2
@@ -119,7 +119,7 @@ class SwipingPhotosController: UIPageViewController, UIPageViewControllerDataSou
 }
 
 class PhotoController: UIViewController{
-    let imageView = UIImageView(image: #imageLiteral(resourceName: "julia2"))
+    let imageView = UIImageView()
     
     init(imageUrl: String) {
         if let url = URL(string: imageUrl){

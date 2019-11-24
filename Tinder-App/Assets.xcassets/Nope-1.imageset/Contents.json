@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "julia3.HEIC",
+      "filename" : "Nope.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "Nope@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "Nope@3x.png",
       "scale" : "3x"
     }
   ],

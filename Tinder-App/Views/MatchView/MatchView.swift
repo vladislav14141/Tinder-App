@@ -69,7 +69,7 @@ class MatchView: UIView {
     }()
     
     fileprivate let currentUserImageView: UIImageView = {
-        let iv = UIImageView(image: #imageLiteral(resourceName: "vlad2"))
+        let iv = UIImageView(image: nil)
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 140 / 2
         iv.layer.borderWidth = 2
@@ -79,7 +79,7 @@ class MatchView: UIView {
     }()
     
     fileprivate let cardUserImageView: UIImageView = {
-        let iv = UIImageView(image: #imageLiteral(resourceName: "julia1"))
+        let iv = UIImageView(image: nil)
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 140 / 2
         iv.layer.borderWidth = 2
@@ -160,8 +160,8 @@ class MatchView: UIView {
 
         decriptionLabel.anchor(top: nil, leading: self.leadingAnchor, bottom: currentUserImageView.topAnchor,
                                trailing:  self.trailingAnchor,
-                               padding: .init(top: 0, left: 0, bottom: 32, right: 0),
-                               size: .init(width: 0, height: 50))
+                               padding: .init(top: 0, left: 0, bottom: 30, right: 0),
+                               size: .init(width: 0, height: 55))
 
         currentUserImageView.anchor(top: nil, leading: nil, bottom: nil, trailing: centerXAnchor,
                                     padding: .init(top: 0, left: 0, bottom: 0, right: 16),

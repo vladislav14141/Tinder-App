@@ -11,7 +11,7 @@ import SDWebImage
 
 class MatchCell: LBTAListCell<Match>{
     
-    let profileImageView = UIImageView(image: UIImage(named: "mother1"), contentMode: .scaleAspectFill )
+    let profileImageView = CircularImageView(width: 80)//
     let userNameLabel = UILabel(text: "user name", font: .systemFont(ofSize: 14, weight: .semibold), textColor: .white, textAlignment: .center, numberOfLines: 2)
     
     override var item: Match!{
@@ -24,10 +24,9 @@ class MatchCell: LBTAListCell<Match>{
     override func setupViews() {
         super.setupViews()
         backgroundColor = .none
-        stack(stack(profileImageView, alignment: .center),userNameLabel)
-        profileImageView.clipsToBounds = true
+        stack(stack(profileImageView, alignment: .center),userNameLabel, distribution: .fill).padBottom(15)
         profileImageView.constrainWidth(80)
         profileImageView.constrainHeight(80)
-        profileImageView.layer.cornerRadius = 80 / 2
+        
     }
 }

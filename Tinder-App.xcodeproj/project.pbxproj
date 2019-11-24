@@ -187,7 +187,6 @@
 		DF524FEA2369AF0700A689E8 /* HorizontalMatchView */ = {
 			isa = PBXGroup;
 			children = (
-				DF524FE4236994B800A689E8 /* MatchesHorizontalController.swift */,
 				DF6D67D423653F3700201239 /* MatchCell.swift */,
 			);
 			path = HorizontalMatchView;
@@ -272,6 +271,7 @@
 				DF561AFC2355734C0014F909 /* SettingsController.swift */,
 				DF561AF0234F35320014F909 /* RegistrationController.swift */,
 				DF201A00235817A2006E663D /* LoginController.swift */,
+				DF524FE4236994B800A689E8 /* MatchesHorizontalController.swift */,
 				DF6D67D023644CFE00201239 /* MatchesMessagesController.swift */,
 				DF524FD62366E49900A689E8 /* ChatLogController.swift */,
 			);

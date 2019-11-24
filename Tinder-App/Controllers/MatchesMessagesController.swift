@@ -9,15 +9,29 @@
 import LBTATools
 import Firebase
 
-class MatchesMessagesController: LBTAListHeaderController<RecentMessageCell, UIColor, MatchesHeader>, UICollectionViewDelegateFlowLayout {
+class MatchesMessagesController: LBTAListHeaderController<RecentMessageCell, RecentMessage, MatchesHeader>, UICollectionViewDelegateFlowLayout {
     let customNavBar = MatchesNavBar()
-    
+    var listener: ListenerRegistration?
+    var recentMessagesDictionary = [String: RecentMessage]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        items = [#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)]
+        fetchRecentMessages()
+        items = []
         setupUI()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if isMovingFromParent{
+            listener?.remove()
+        }
+    }
+    
+    deinit {
+        Log("Matches controller was deinited")
+    }
+
     override func setupHeader(_ header: MatchesHeader){
         header.horizontalViewController.rootMatchesController = self
     }
@@ -30,7 +44,7 @@ class MatchesMessagesController: LBTAListHeaderController<RecentMessageCell, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return .init(width: view.frame.width, height: 250)
+        return .init(width: view.frame.width, height: 230)
     }
     
     private func setupUI(){
@@ -49,20 +63,35 @@ class MatchesMessagesController: LBTAListHeaderController<RecentMessageCell, UIC
         statusBarCover.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, trailing: view.trailingAnchor)
     }
     
-    private func fetchMatches(){
+    private func fetchRecentMessages(){
         guard let currentUserId = Auth.auth().currentUser?.uid else {return}
-        Firestore.firestore().collection("matches_messages").document(currentUserId).collection("matches").getDocuments { (snapshot, err) in
-            if let err = err{
-                print("Failed to fetch matches", err)
-                return
-            }
-            var matches = [Match]()
-            snapshot?.documents.forEach({ (document) in
-                matches.append(.init(dictionary: document.data()))
+        let query = Firestore.firestore().collection("matches_messages").document(currentUserId).collection("recent_messages")
+        
+        listener = query.addSnapshotListener { (snapshot, err) in
+            snapshot?.documentChanges.forEach({ (change) in
+                if change.type == .added || change.type == .modified{
+                    let dictionary = change.document.data()
+                    let recentMessages = RecentMessage(dictionary: dictionary)
+                    self.recentMessagesDictionary[recentMessages.uid] = recentMessages
+                }
             })
-//            self.items = matches
-            self.collectionView.reloadData()
+            self.resetItems()
         }
+    }
+    
+    private func resetItems(){
+        let values = Array(recentMessagesDictionary.values)
+        items = values.sorted(by: { (rm1, rm2) -> Bool in
+            return rm1.timestamp.compare(rm2.timestamp) == .orderedDescending
+        })
+        collectionView.reloadData()
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let recentMessage = self.items[indexPath.item]
+        let match = Match(name: recentMessage.name, profileImage: recentMessage.profileImageUrl, uid: recentMessage.uid)
+        let chatLogVC = ChatLogController(match: match)
+        navigationController?.pushViewController(chatLogVC, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

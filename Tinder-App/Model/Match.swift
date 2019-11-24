@@ -16,4 +16,10 @@ struct Match {
         self.profileImageUrl = dictionary["profileImage"] as? String ?? ""
         self.uid = dictionary["uid"] as? String ?? ""
     }
+    
+    init(name: String, profileImage: String, uid: String) {
+        self.name = name
+        self.profileImageUrl = profileImage
+        self.uid = uid
+    }
 }

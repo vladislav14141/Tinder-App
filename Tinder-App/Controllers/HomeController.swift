@@ -23,6 +23,7 @@ class HomeController: UIViewController, SettingsControllerDelegate, CardViewDele
     fileprivate var visibledUserCards = [CardView]()
     fileprivate var user: User?
     fileprivate var swipesUsers = [String: Int]()
+    fileprivate var users = [String: User]()
 
     
     override func viewDidLoad() {
@@ -36,19 +37,24 @@ class HomeController: UIViewController, SettingsControllerDelegate, CardViewDele
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleDislike))
         longGesture.minimumPressDuration = 0.5
         bottomControls.dislikeButton.addGestureRecognizer(longGesture)
-
-        setupLayout()
         navigationController?.navigationBar.isHidden = true
+        setupLayout()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         fetchCurrentUser()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         loginController.presentLoginVC(in: self)
+    }
+    
+    
+    deinit {
+        Log("HomeController was deinited")
     }
     
 
@@ -95,7 +101,6 @@ class HomeController: UIViewController, SettingsControllerDelegate, CardViewDele
         
         overallStackView.bringSubviewToFront(cardsDeckView)
     }
-    var users = [String: User]()
     
     fileprivate func fetchUsersFromFirestore(){
         guard let minAge = user?.minSeekingAge, let maxAge = user?.maxSeekingAge else {
@@ -105,6 +110,9 @@ class HomeController: UIViewController, SettingsControllerDelegate, CardViewDele
             progressHUD.dismiss(afterDelay: 4)
             return
         }
+        
+        cardsDeckView.subviews.forEach({ $0.removeFromSuperview() })
+        visibledUserCards.removeAll()
         
         progressHUD.showProgressHUD(in: self.view, with: "Получение пользователей")
         let query = Firestore.firestore().collection("users").whereField("age", isGreaterThanOrEqualTo: minAge).whereField("age", isLessThanOrEqualTo: maxAge)
@@ -281,7 +289,6 @@ class HomeController: UIViewController, SettingsControllerDelegate, CardViewDele
             cardsDeckView.subviews.forEach({ $0.removeFromSuperview() })
             visibledUserCards.removeAll()
             fetchSwipes(completion: {
-                
                 self.fetchUsersFromFirestore()
             })
             sender.setImage(UIImage(named: "Tinder Single gray")?.withRenderingMode(.alwaysOriginal), for: .normal)

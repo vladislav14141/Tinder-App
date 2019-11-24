@@ -8,9 +8,9 @@
 
 import LBTATools
 class MessageNavBar: UIView {
-    var backButton = UIButton(image: #imageLiteral(resourceName: "back"), tintColor: #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1))
-    var flagButton = UIButton(image: #imageLiteral(resourceName: "flag"), tintColor: #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1))
-    var userImageView = CircularImageView(width: 54, image: #imageLiteral(resourceName: "father1.jpg"))
+    var backButton = UIButton(image: #imageLiteral(resourceName: "back"), tintColor: #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1))
+    var flagButton = UIButton(image: #imageLiteral(resourceName: "flag"), tintColor: #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1))
+    var userImageView = CircularImageView(width: 54)
     var userName = UILabel(text: "UserName", font: .systemFont(ofSize: 16), textColor: .white , textAlignment: .center, numberOfLines: 2)
     var match: Match
     

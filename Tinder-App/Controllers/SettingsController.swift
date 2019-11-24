@@ -24,7 +24,10 @@ class SettingsController: UITableViewController {
     class CustomImagePickerController: UIImagePickerController{
         var imageButton: UIButton?
     }
+    
     var delegate: SettingsControllerDelegate?
+    var progressHUD = ProgressHUD()
+    var user: User?
     
     let loginController = LoginController()
     lazy var image1Button = createButton(selector: #selector(handleSelectPhoto))
@@ -46,8 +49,7 @@ class SettingsController: UITableViewController {
         return header
     }()
     
-    var progressHUD = ProgressHUD()
-    var user: User?
+  
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +61,10 @@ class SettingsController: UITableViewController {
         tableView.keyboardDismissMode = .interactive
         
         fetchCurrentUser()
+    }
+    
+    deinit {
+        Log("Deinit Setting Controller")
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

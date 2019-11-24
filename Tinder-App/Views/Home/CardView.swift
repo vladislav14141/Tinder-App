@@ -26,6 +26,9 @@ class CardView: UIView {
     fileprivate let infoLabel = UILabel()
     fileprivate let gradientLayer = CAGradientLayer()
     fileprivate var deselectedBarColor = UIColor(white: 0.2, alpha: 0.4)
+    fileprivate let nopeHeader = UIImageView(image: #imageLiteral(resourceName: "Nope-1"))
+    fileprivate let likeHeader = UIImageView(image: #imageLiteral(resourceName: "Like-1"), contentMode: .scaleAspectFit)
+    
     
     var cardViewModel: CardViewModel! {
         didSet {
@@ -93,6 +96,13 @@ class CardView: UIView {
         infoLabel.textColor = .white
         infoLabel.numberOfLines = 0
         
+        addSubview(likeHeader)
+        addSubview(nopeHeader)
+        likeHeader.alpha = 0
+        nopeHeader.alpha = 0
+        likeHeader.anchor(top: self.topAnchor, leading: nil, bottom: nil, trailing: self.trailingAnchor, padding: .init(top: 70, left: 0, bottom: 0, right: 20), size: .init(width: 171, height: 112))
+        nopeHeader.anchor(top: self.topAnchor, leading: self.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 70, left: 20, bottom: 0, right: 0), size: .init(width: 171, height: 112))
+        
         addSubview(infoButton)
         infoButton.anchor(top: nil, leading: nil, bottom: self.bottomAnchor, trailing: self.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 16, right: 16), size: .init(width: 44, height: 44))
         
@@ -158,10 +168,19 @@ class CardView: UIView {
     fileprivate func handleChanged(_ gesture: UIPanGestureRecognizer) {
         
         let translation = gesture.translation(in: nil)
-        
+        let alpha = abs(translation.x) / 50
+        print(alpha)
         // Convert radians to degree
         let degrees: CGFloat = translation.x / 20
-        let angle = degrees * .pi / 180 
+        let angle = degrees * .pi / 180
+        if translation.x > 0{
+            self.likeHeader.alpha = alpha
+            self.nopeHeader.alpha = 0
+        } else {
+            self.nopeHeader.alpha = alpha
+            self.likeHeader.alpha = 0
+
+        }
         
         let rotationTransformation = CGAffineTransform(rotationAngle: angle)
         self.transform = rotationTransformation.translatedBy(x: translation.x, y: 0)
@@ -187,6 +206,8 @@ class CardView: UIView {
             print(" ")
         case .none:
             self.transform = .identity
+            self.nopeHeader.alpha = 0
+            self.likeHeader.alpha = 0
         }
 //        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
 //

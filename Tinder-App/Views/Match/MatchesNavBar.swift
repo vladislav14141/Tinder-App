@@ -17,9 +17,10 @@ class MatchesNavBar: UIView{
         backgroundColor = .black
         
         let iconImageView = UIImageView(image: UIImage(named: "top_right_messages")?.withRenderingMode(.alwaysTemplate), contentMode: .scaleAspectFit)
-        iconImageView.tintColor = UIColor(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
+        
+        iconImageView.tintColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
         let messageLabel = UILabel(text: "Messages", font: UIFont.boldSystemFont(ofSize: 20),
-                                   textColor: UIColor(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1),
+                                   textColor: #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1),
                                    textAlignment: .center, numberOfLines: 0)
         
         let feedLabel = UILabel(text: "Feed", font: UIFont.boldSystemFont(ofSize: 20),
