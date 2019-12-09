@@ -9,25 +9,19 @@
 import UIKit
 import SDWebImage
 class UserDetailController: UIViewController, UIScrollViewDelegate {
+    // MARK: - Private Properties
     fileprivate var isFirstOpened = true
     fileprivate let swipingPhotosController = SwipingPhotosController(isCardViewModel: false)
     fileprivate let extraSwipingHeight: CGFloat = 80
     fileprivate let extraPostionY: CGFloat = 0
     
+    // MARK: - Public Properties
     var cardViewModel: CardViewModel! {
         didSet{
             infoLabel.attributedText = cardViewModel.attributedString
             swipingPhotosController.cardViewModel = cardViewModel
         }
-    }
-    
-    lazy var scrollView: UIScrollView = {
-        let sv = UIScrollView()
-        sv.alwaysBounceVertical = true
-        sv.contentInsetAdjustmentBehavior = .never
-        sv.delegate = self
-        return sv
-    }()
+   }
     
     let infoLabel: UILabel = {
         let label = UILabel()
@@ -46,7 +40,15 @@ class UserDetailController: UIViewController, UIScrollViewDelegate {
     lazy var dislikeButton = self.createButtons(image: #imageLiteral(resourceName: "Nope"), selector: #selector(handleDislike))
     lazy var superLikeButton = self.createButtons(image: #imageLiteral(resourceName: "Super Like"), selector: #selector(handleDislike))
     lazy var likeButton = self.createButtons(image: #imageLiteral(resourceName: "Like"), selector: #selector(handleDislike))
+    lazy var scrollView: UIScrollView = {
+         let sv = UIScrollView()
+         sv.alwaysBounceVertical = true
+         sv.contentInsetAdjustmentBehavior = .never
+         sv.delegate = self
+         return sv
+     }()
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
@@ -63,6 +65,7 @@ class UserDetailController: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    //MARK: - Delegate Method
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let imageView = swipingPhotosController.view!
         let changeY = scrollView.contentOffset.y
@@ -71,6 +74,7 @@ class UserDetailController: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    // MARK: - Private Methods
     fileprivate func setupBottomControls(){
        let stackView = UIStackView(arrangedSubviews: [dislikeButton, superLikeButton, likeButton])
         stackView.distribution = .fillEqually
@@ -111,9 +115,7 @@ class UserDetailController: UIViewController, UIScrollViewDelegate {
         dismissButton.anchor(top: swipingView.bottomAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: -25, left: 0, bottom: 0, right: 23), size: .init(width: 50, height: 50))
     }
 
-
-
-    
+    //MARK: - Handlers
     @objc fileprivate func handleDislike() {
         print("Dislikeee")
     }

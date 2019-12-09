@@ -24,7 +24,7 @@ class SettingsController: UITableViewController {
     class CustomImagePickerController: UIImagePickerController{
         var imageButton: UIButton?
     }
-    
+    // MARK: - Public Properties
     var delegate: SettingsControllerDelegate?
     var progressHUD = ProgressHUD()
     var user: User?
@@ -50,7 +50,7 @@ class SettingsController: UITableViewController {
     }()
     
   
-    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -67,6 +67,7 @@ class SettingsController: UITableViewController {
         Log("Deinit Setting Controller")
     }
     
+    //MARK:- Delegate Methods
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = HeaderLabel()
         
@@ -147,6 +148,7 @@ class SettingsController: UITableViewController {
     
  
     
+    // MARK: - Private Methods
     fileprivate func fetchCurrentUser() {
         guard let uid = Auth.auth().currentUser?.uid else {return}
         Firestore.firestore().collection("users").document(uid).getDocument { (snapshot, err) in
@@ -210,6 +212,7 @@ class SettingsController: UITableViewController {
         self.view.addGestureRecognizer(gesture)
     }
     
+    //MARK: - Handlers
     @objc fileprivate func handleNameChange(textField: UITextField){
         guard textField.text?.count ?? 0 > 1 else {return}
         self.user?.name = textField.text ?? ""
@@ -312,7 +315,7 @@ class SettingsController: UITableViewController {
 
      }
 }
-
+//MARK:- Delegate Methods
 extension SettingsController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let selectedImage = info[.originalImage] as? UIImage
@@ -323,7 +326,7 @@ extension SettingsController: UIImagePickerControllerDelegate, UINavigationContr
         let filename = UUID().uuidString
         let ref = Storage.storage().reference(withPath: "/images/\(filename)")
         guard let uploadData = selectedImage?.jpegData(compressionQuality: 0.75) else {return}
-        progressHUD.showUploadingProgressHUD(in: self.view, progress: 1000.74, with: "Uploading image...")
+        progressHUD.showUploadingProgressHUD(in: self.view, progress: 0.74, with: "Uploading image...")
         ref.putData(uploadData, metadata: nil) { (data, err) in
             
             

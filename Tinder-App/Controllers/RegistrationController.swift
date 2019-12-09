@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import JGProgressHUD
 class RegistrationController: UIViewController  {
+    // MARK: - Public Properties
     let progressHUD = ProgressHUD()
     let registrationViewModel = RegistrationViewModel()
     lazy var verticalStackView: UIStackView = {
@@ -101,9 +102,7 @@ class RegistrationController: UIViewController  {
         return gradientLayer
     }()
     
-    
-
-
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNotificationObserver()
@@ -111,8 +110,6 @@ class RegistrationController: UIViewController  {
         setupRegistrationViewModelObserver()
         setupLayout()
     }
-    
-
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -132,6 +129,7 @@ class RegistrationController: UIViewController  {
         }
     }
     
+    // MARK: - Private Methods
     fileprivate func setupLayout() {
         navigationController?.isNavigationBarHidden = true
         view.layer.addSublayer(gradientLayer)
@@ -174,7 +172,7 @@ class RegistrationController: UIViewController  {
     }
     
     
-    
+    //MARK: - Handlers
     @objc fileprivate func handleRegister() {
         self.handleTapDismiss()
         registrationViewModel.performRegistration { [weak self] (err) in
@@ -229,6 +227,7 @@ class RegistrationController: UIViewController  {
     }
 }
 
+//MARK:- Delegate Methods
 extension RegistrationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[.originalImage] as? UIImage
@@ -236,6 +235,7 @@ extension RegistrationController: UIImagePickerControllerDelegate, UINavigationC
         registrationViewModel.checkFormValidity()
         dismiss(animated: true, completion: nil)
     }
+    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }

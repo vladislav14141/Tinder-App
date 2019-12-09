@@ -19,17 +19,9 @@ protocol CardViewDelegate {
     func didRemoveCard(cardView: CardView)
 }
 class CardView: UIView {
+    // MARK: - Public Properties
     let progressHUD = ProgressHUD()
     var delegate: CardViewDelegate?
-//    var nextCardView: CardView?
-    fileprivate let swipingPhotosController = SwipingPhotosController(isCardViewModel: true)
-    fileprivate let infoLabel = UILabel()
-    fileprivate let gradientLayer = CAGradientLayer()
-    fileprivate var deselectedBarColor = UIColor(white: 0.2, alpha: 0.4)
-    fileprivate let nopeHeader = UIImageView(image: #imageLiteral(resourceName: "Nope-1"))
-    fileprivate let likeHeader = UIImageView(image: #imageLiteral(resourceName: "Like-1"), contentMode: .scaleAspectFit)
-    
-    
     var cardViewModel: CardViewModel! {
         didSet {
             swipingPhotosController.cardViewModel = self.cardViewModel
@@ -48,6 +40,13 @@ class CardView: UIView {
         }
     }
     
+    // MARK: - Private Properties
+    fileprivate let swipingPhotosController = SwipingPhotosController(isCardViewModel: true)
+    fileprivate let infoLabel = UILabel()
+    fileprivate let gradientLayer = CAGradientLayer()
+    fileprivate var deselectedBarColor = UIColor(white: 0.2, alpha: 0.4)
+    fileprivate let nopeHeader = UIImageView(image: #imageLiteral(resourceName: "Nope-1"))
+    fileprivate let likeHeader = UIImageView(image: #imageLiteral(resourceName: "Like-1"), contentMode: .scaleAspectFit)
     fileprivate let infoButton: UIButton = {
         let bt = UIButton(type: .system)
         bt.setImage(UIImage(named: "icons8-info_filled")?.withRenderingMode(.alwaysOriginal), for: .normal)
@@ -56,6 +55,7 @@ class CardView: UIView {
         return bt
     }()
     
+    // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -72,12 +72,14 @@ class CardView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle
     override func layoutSubviews() {
         gradientLayer.frame = self.frame
     }
     
 
     
+    // MARK: - Private Methods
     fileprivate func setupLayout() {
         // custom drawing code
         layer.cornerRadius = 10
@@ -135,6 +137,8 @@ class CardView: UIView {
         }
     }
     
+    
+    //MARK: - Handlers
     @objc fileprivate func handleMoreInfo(){
         delegate?.didTapMoreInfo(cardViewModel: self.cardViewModel)
     }

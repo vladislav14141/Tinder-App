@@ -10,8 +10,10 @@ import LBTATools
 import Firebase
 
 class ChatLogController: LBTAListController<MessageCell,Message>, UICollectionViewDelegateFlowLayout{
+    // Отслеживает получение сообщения
+    // MARK: - Public Properties
     var listener: ListenerRegistration?
-    
+    var currentUser: User?
     let match: Match
     
     lazy var customNavBar = MessageNavBar(match: self.match)
@@ -21,6 +23,7 @@ class ChatLogController: LBTAListController<MessageCell,Message>, UICollectionVi
         return civ
     }()
     
+    // MARK: - Initializers
     init(match: Match){
         self.match = match
         super.init()
@@ -30,6 +33,7 @@ class ChatLogController: LBTAListController<MessageCell,Message>, UICollectionVi
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle
     override var inputAccessoryView: UIView?{
         get{
             return customAccessView
@@ -38,17 +42,6 @@ class ChatLogController: LBTAListController<MessageCell,Message>, UICollectionVi
     
     override var canBecomeFirstResponder: Bool{
         return true
-    }
-    var currentUser: User?
-    fileprivate func fetchCurrentUser(){
-        guard let uid = Auth.auth().currentUser?.uid else {return}
-        Firestore.firestore().collection("users").document(uid).getDocument { (snapshot, err) in
-            if let err = err{
-                Log(err)
-            }
-            let data = snapshot?.data() ?? [:]
-            self.currentUser = User(dictionary: data)
-        }
     }
     
     override func viewDidLoad() {
@@ -67,10 +60,11 @@ class ChatLogController: LBTAListController<MessageCell,Message>, UICollectionVi
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if isMovingFromParent{
-                listener?.remove()
+            listener?.remove()
         }
     }
     
+    //MARK:- Delegate Methods
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return .init(top: 16, left: 0, bottom: 16, right: 0)
     }
@@ -82,6 +76,19 @@ class ChatLogController: LBTAListController<MessageCell,Message>, UICollectionVi
         
         let estimatedSize = estimatedSizeCell.systemLayoutSizeFitting(.init(width: view.frame.width, height: 1000))
         return .init(width: view.frame.width, height: estimatedSize.height)
+    }
+    
+    
+    // MARK: - Private Methods
+    fileprivate func fetchCurrentUser(){
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        Firestore.firestore().collection("users").document(uid).getDocument { (snapshot, err) in
+            if let err = err{
+                Log(err)
+            }
+            let data = snapshot?.data() ?? [:]
+            self.currentUser = User(dictionary: data)
+        }
     }
     
     fileprivate func fetchMessages(){
@@ -118,6 +125,7 @@ class ChatLogController: LBTAListController<MessageCell,Message>, UICollectionVi
         view.addSubview(statusBarCover)
         statusBarCover.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, trailing: view.trailingAnchor)
     }
+    
     fileprivate func saveToFromMessages(){
         guard let currentUserId = Auth.auth().currentUser?.uid else {return}
         let CurrentUserCollection = Firestore.firestore().collection("matches_messages").document(currentUserId).collection(match.uid)
@@ -158,6 +166,7 @@ class ChatLogController: LBTAListController<MessageCell,Message>, UICollectionVi
          }
     }
     
+    //MARK: - Handlers
     @objc fileprivate func handleSend(){
         saveToFromMessages()
         saveToFromRecenetMessages()

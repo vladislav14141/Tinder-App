@@ -70,6 +70,7 @@
 		02681ED88248D2519A652EA8 /* Pods_Tinder_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tinder_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D3D8FB7B2B7605DB6B34219 /* Pods-Tinder-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tinder-App.release.xcconfig"; path = "Target Support Files/Pods-Tinder-App/Pods-Tinder-App.release.xcconfig"; sourceTree = "<group>"; };
 		4827C1DB6D667CD6485126ED /* Pods-Tinder-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tinder-App.debug.xcconfig"; path = "Target Support Files/Pods-Tinder-App/Pods-Tinder-App.debug.xcconfig"; sourceTree = "<group>"; };
+		DF0325A9238A89AF003EE8FD /* Tinder-App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Tinder-App.entitlements"; sourceTree = "<group>"; };
 		DF201A00235817A2006E663D /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		DF201A0323581D37006E663D /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		DF50AE112362C1C800918593 /* SendMessageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageButton.swift; sourceTree = "<group>"; };
@@ -213,6 +214,7 @@
 		DF561AC82349BA330014F909 /* Tinder-App */ = {
 			isa = PBXGroup;
 			children = (
+				DF0325A9238A89AF003EE8FD /* Tinder-App.entitlements */,
 				DF561AEB234C9F180014F909 /* ViewModels */,
 				DF561AEA234C9E670014F909 /* Controllers */,
 				DF561AE7234C90090014F909 /* Model */,
@@ -604,6 +606,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4827C1DB6D667CD6485126ED /* Pods-Tinder-App.debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Tinder-App/Tinder-App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T7BM86Q6MS;
 				INFOPLIST_FILE = "Tinder-App/Info.plist";
@@ -623,6 +626,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2D3D8FB7B2B7605DB6B34219 /* Pods-Tinder-App.release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Tinder-App/Tinder-App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T7BM86Q6MS;
 				INFOPLIST_FILE = "Tinder-App/Info.plist";

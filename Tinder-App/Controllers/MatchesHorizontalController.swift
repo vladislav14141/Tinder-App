@@ -9,6 +9,7 @@
 import LBTATools
 import Firebase
 class MatchesHorizontalController: LBTAListController<MatchCell, Match>,UICollectionViewDelegateFlowLayout{
+    // MARK: - Public Properties
     weak var rootMatchesController: MatchesMessagesController?
     
     override func viewDidLoad() {

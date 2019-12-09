@@ -9,8 +9,8 @@
 import UIKit
 import Firebase
 import JGProgressHUD
-class HomeController: UIViewController, SettingsControllerDelegate, CardViewDelegate {
-//    fileprivate var topCardView: CardView?
+class HomeController: UIViewController {
+    // MARK: - Private Properties
     fileprivate let topStackView = TopNavigationStackView()
     fileprivate let cardsDeckView = UIView()
     fileprivate let bottomControls = HomeBottomControlStackView()
@@ -25,7 +25,7 @@ class HomeController: UIViewController, SettingsControllerDelegate, CardViewDele
     fileprivate var swipesUsers = [String: Int]()
     fileprivate var users = [String: User]()
 
-    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         topStackView.settingButton.addTarget(self, action: #selector(handleSetting), for: .touchUpInside)
@@ -57,40 +57,22 @@ class HomeController: UIViewController, SettingsControllerDelegate, CardViewDele
         Log("HomeController was deinited")
     }
     
-
-    
-    fileprivate func fetchCurrentUser(){
-        guard let uid = Auth.auth().currentUser?.uid else {return}
-
-        Firestore.firestore().collection("users").document(uid).getDocument { (snapshot, err) in
-            if let err = err {
-                self.progressHUD.showHUDWithMessage(in: self.view, error: err)
-                return
-            }
-            
-            guard let dictionary = snapshot?.data() else {return}
-            let user = User(dictionary: dictionary)
-            self.user = user
-            self.fetchUsersFromFirestore()
-        }
-    }
-
-    func didSaveSettings() {
-        fetchCurrentUser()
-    }
-    
-    func didRemoveCard(cardView: CardView) {
-        self.visibledUserCards.first?.removeFromSuperview()
-    }
-    
-    func didTapMoreInfo(cardViewModel: CardViewModel) {
-        let contr = UserDetailController()
-        contr.cardViewModel = cardViewModel
-        present(contr, animated: true)
-        
-    }
-    
     // MARK: - Private Methods
+    fileprivate func fetchCurrentUser(){
+         guard let uid = Auth.auth().currentUser?.uid else {return}
+
+         Firestore.firestore().collection("users").document(uid).getDocument { (snapshot, err) in
+             if let err = err {
+                 self.progressHUD.showHUDWithMessage(in: self.view, error: err)
+                 return
+             }
+             guard let dictionary = snapshot?.data() else {return}
+             let user = User(dictionary: dictionary)
+             self.user = user
+             self.fetchUsersFromFirestore()
+         }
+     }
+
     fileprivate func setupLayout() {
         let overallStackView = UIStackView(arrangedSubviews: [topStackView, cardsDeckView, bottomControls])
         overallStackView.axis = .vertical
@@ -179,9 +161,7 @@ class HomeController: UIViewController, SettingsControllerDelegate, CardViewDele
                     if didLike == 1 {self.checkIfMatchExists(cardUID: cardUID)}
                 }
             }
-            
         }
-        
     }
     
     fileprivate func checkIfMatchExists(cardUID: String){
@@ -262,9 +242,10 @@ class HomeController: UIViewController, SettingsControllerDelegate, CardViewDele
         self.visibledUserCards.removeFirst()
     }
     
-    private var timer: Timer?
+    
     
     @objc func handleDislike(sender: UIGestureRecognizer?){
+        var timer: Timer?
             if (sender != nil) && sender is UILongPressGestureRecognizer{
                 switch sender?.state{
                 case .began:
@@ -283,6 +264,8 @@ class HomeController: UIViewController, SettingsControllerDelegate, CardViewDele
             }
         
     }
+    
+    //MARK: Handlers
     @objc fileprivate func handleFireButton(sender: UIButton){
         isFireButtonPressed.toggle()
         if isFireButtonPressed{
@@ -322,3 +305,20 @@ class HomeController: UIViewController, SettingsControllerDelegate, CardViewDele
     }
 }
 
+//MARK:- Delegate Methods
+extension HomeController: SettingsControllerDelegate, CardViewDelegate{
+    
+       func didSaveSettings() {
+           fetchCurrentUser()
+       }
+       
+       func didRemoveCard(cardView: CardView) {
+           self.visibledUserCards.first?.removeFromSuperview()
+       }
+       
+       func didTapMoreInfo(cardViewModel: CardViewModel) {
+           let contr = UserDetailController()
+           contr.cardViewModel = cardViewModel
+           present(contr, animated: true)
+       }
+}

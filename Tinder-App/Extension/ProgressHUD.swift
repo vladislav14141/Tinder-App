@@ -34,9 +34,12 @@ public class ProgressHUD: JGProgressHUD {
     
     func showUploadingProgressHUD(in view: UIView, progress: Float, with message: String){
         hud.textLabel.text = message
-        hud.progress = progress
+        hud.progress = 400
         hud.indicatorView = JGProgressHUDPieIndicatorView()
         hud.show(in: view, animated: true)
+        
+       
+        
 
     }
     

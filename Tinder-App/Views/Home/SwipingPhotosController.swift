@@ -104,7 +104,6 @@ class SwipingPhotosController: UIPageViewController, UIPageViewControllerDataSou
         barsStackView.spacing = 4
         barsStackView.distribution = .fillEqually
         view.addSubview(barsStackView)
-//        let paddingTop = UIApplication.shared.statusBarFrame.height + 8
         barsStackView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: paddingTop, left: 8, bottom: 0, right: 8),size: .init(width: 0, height: 4))
     }
     

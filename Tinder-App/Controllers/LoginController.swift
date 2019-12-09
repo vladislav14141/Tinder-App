@@ -10,10 +10,22 @@ import UIKit
 import Firebase
 
 
-class LoginController: UIViewController {    
+class LoginController: UIViewController {
+    
+    // MARK: - Private Properties
     fileprivate let progressHUD = ProgressHUD()
     fileprivate let gradientLayer = CAGradientLayer()
     fileprivate let loginViewModel = LoginViewModel()
+    fileprivate let backToRegisterButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Register", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        button.addTarget(self, action: #selector(handleBack), for: .touchUpInside)
+        return button
+    }()
+    
+    // MARK: - Public Properties
     let emailTextField: CustomTextField = {
         let tf = CustomTextField(padding: 24, placeholder: "Enter email")
         tf.keyboardType = .emailAddress
@@ -53,15 +65,7 @@ class LoginController: UIViewController {
         return button
     }()
 
-    fileprivate let backToRegisterButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Register", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        button.addTarget(self, action: #selector(handleBack), for: .touchUpInside)
-        return button
-    }()
-
+    // MARK: - Lifecycle
     override func viewWillLayoutSubviews() {
          super.viewWillLayoutSubviews()
          gradientLayer.frame = view.bounds
@@ -76,6 +80,17 @@ class LoginController: UIViewController {
         setupBindables()
     }
 
+    // MARK: - Public Methods
+    func presentLoginVC(in view: UIViewController) {
+           if Auth.auth().currentUser == nil {
+            let registrationVC = LoginController()
+               let navController = UINavigationController(rootViewController: registrationVC)
+            navController.modalPresentationStyle = .fullScreen
+            view.present(navController, animated: true)
+           }
+       }
+    
+    // MARK: - Private Methods
     fileprivate func setupBindables() {
         loginViewModel.isFormValid.bind { [unowned self] (isFormValid) in
             guard let isFormValid = isFormValid else { return }
@@ -91,15 +106,6 @@ class LoginController: UIViewController {
             }
         }
     }
-    
-    func presentLoginVC(in view: UIViewController) {
-           if Auth.auth().currentUser == nil {
-            let registrationVC = LoginController()
-               let navController = UINavigationController(rootViewController: registrationVC)
-            navController.modalPresentationStyle = .fullScreen
-            view.present(navController, animated: true)
-           }
-       }
     
     fileprivate func setupGradientLayer() {
         let topColor = #colorLiteral(red: 0.9921568627, green: 0.3568627451, blue: 0.3725490196, alpha: 1)
@@ -126,6 +132,7 @@ class LoginController: UIViewController {
             self.view.addGestureRecognizer(gesture)
     }
     
+    //MARK: - Handlers
     @objc fileprivate func handleBack() {
         let registrationController = RegistrationController()
         navigationController?.pushViewController(registrationController, animated: true)
